@@ -1,39 +1,33 @@
-package love.aojie.链表.单链表;
+package love.aojie.链表.双链表;
 
 import org.junit.Test;
 
 /**
  * @author: JieGe
  * @time:
- * @function: 单链表类
+ * @function:
  */
-public class SingleLinkedList {
+public class DoubleLinkedList {
 
-    // 定义一个头节点属性
-    public CharacterNode head = new CharacterNode(0,null,null);
+    public CharacterNode head = new CharacterNode(0,"head",null,null);
 
     {
-        // 创建公共链表
-        SingleLinkedList linkedList = new SingleLinkedList();
+        CharacterNode ls1 = new CharacterNode(1, "林三");
+        CharacterNode xqx2 = new CharacterNode(2, "肖青璇");
+        CharacterNode xyr3 = new CharacterNode(3, "萧玉若");
+        CharacterNode xys4 = new CharacterNode(4, "萧玉霜");
+        CharacterNode qxe5 = new CharacterNode(5, "秦仙儿");
+        CharacterNode dqq6 = new CharacterNode(6, "测试");
 
-        // 创建节点
-        CharacterNode ls1 = new CharacterNode(1, "林三", null);
-        CharacterNode xqx2 = new CharacterNode(2, "肖青璇", null);
-        CharacterNode xyr3 = new CharacterNode(3, "萧玉若", null);
-        CharacterNode xys4 = new CharacterNode(4, "萧玉霜", null);
-        CharacterNode qxe5 = new CharacterNode(5, "秦仙儿", null);
-        CharacterNode dqq6 = new CharacterNode(6, "测试", null);
-
-        // 添加节点
-        linkedList.addNodeByOrder(xyr3);
-        linkedList.addNodeByOrder(xys4);
-        linkedList.addNodeByOrder(ls1);
-        linkedList.addNodeByOrder(xqx2);
-        linkedList.addNodeByOrder(dqq6);
-        linkedList.addNodeByOrder(qxe5);
+        addNodeByOrder(ls1);
+        addNodeByOrder(xqx2);
+        addNodeByOrder(xyr3);
+        addNodeByOrder(xys4);
+        addNodeByOrder(qxe5);
+        addNodeByOrder(dqq6);
     }
     /**
-     *  测试单链表按顺序添加
+     *  测试双链表按顺序添加
      */
     @Test
     public void testAddNodeByOrder(){
@@ -41,11 +35,11 @@ public class SingleLinkedList {
     }
 
     /**
-     * 测试单链表的修改
+     * 测试双链表的修改
      */
     @Test
     public void testUpdate(){
-        CharacterNode dqq6 = new CharacterNode(6, "董巧巧",null);
+        CharacterNode dqq6 = new CharacterNode(6, "董巧巧");
 
         update(dqq6);
 
@@ -53,7 +47,7 @@ public class SingleLinkedList {
     }
 
     /**
-     *  测试单链表的删除
+     *  测试双链表的删除
      */
     @Test
     public void testDelete(){
@@ -61,22 +55,26 @@ public class SingleLinkedList {
 
         showLinkedList();
     }
-
-    // 添加下一个节点的方法（无顺序添加）
-    public void addNode(CharacterNode node){
-        // 头节点是唯一的，使用一个临时的变量复制
+    // 查看链表元素
+    public void showLinkedList(){
+        // 先判断链表是否为空
+        if (head.next == null){
+            System.out.println("链表为空");
+            return;
+        }
+        //头节点只是辅助，所以要从头结点开始
         CharacterNode temp = head;
 
-        // 循环添加节点
+        // 使用循环打印出链表
         while (true){
-            // 判断节点中的next是否为空
+            // 先做结束条件判断
             if (temp.next == null){
-                // next为空，添加新的节点
-                temp.next = node;
                 break;
             }
-            //为空就添加
+            // 执行下一个节点
             temp = temp.next;
+            // 循环一次打印一个节点
+            System.out.println(temp);
         }
     }
 
@@ -118,6 +116,8 @@ public class SingleLinkedList {
             node.next = temp.next;
             // 把当前节点的next域指向添加节点的next域
             temp.next = node;
+            // 将添加节点的pre指向temp
+            node.pre = temp;
         }
     }
 
@@ -178,7 +178,7 @@ public class SingleLinkedList {
                 break;
             }
             // 判断找到节点的条件
-            if (temp.next.no == no){
+            if (temp.no == no){
                 flag = true;
                 break;
             }
@@ -187,35 +187,10 @@ public class SingleLinkedList {
         }
         // 判断是否找到节点信息
         if (flag){
-            temp.next = temp.next.next;
+            temp.next.pre = temp.pre;
+            temp.pre.next = temp.next;
         }else {
             System.out.println("未找到删除的节点，请先添加");
         }
     }
-
-    // 查看链表元素
-    public void showLinkedList(){
-        // 先判断链表是否为空
-        if (head.next == null){
-            System.out.println("链表为空");
-            return;
-        }
-        //头节点只是辅助，所以要从头结点开始
-        CharacterNode temp = head;
-
-        // 使用循环打印出链表
-        while (true){
-            // 先做结束条件判断
-            if (temp.next == null){
-                break;
-            }
-            // 执行下一个节点
-            temp = temp.next;
-            // 循环一次打印一个节点
-            System.out.println(temp);
-        }
-
-
-    }
-
 }

@@ -2,7 +2,7 @@ package love.aojie.链表.单链表;
 
 import org.junit.Test;
 
-import java.time.OffsetDateTime;
+import java.util.Stack;
 
 /**
  * @author: JieGe
@@ -17,13 +17,17 @@ import java.time.OffsetDateTime;
  *  5、合并两个有序的单链表，合并之后的链表依然有序【课后练习.】
  */
 public class Interview {
+
+
     /**
      * 1、求单链表中有效节点的个数
      */
     @Test
     public void testValidNodeCount(){
         SingleLinkedList linkedList = new SingleLinkedList();
+
         int validNodeCount = this.validNodeCount(linkedList);
+
         System.out.println("有效节点的个数为：" + validNodeCount);
     }
 
@@ -33,6 +37,7 @@ public class Interview {
     @Test
     public void testLastIndexNode(){
         SingleLinkedList linkedList = new SingleLinkedList();
+
         CharacterNode lastIndexNode = this.LastIndexNode(linkedList ,1);
 
         if (lastIndexNode == null){
@@ -49,14 +54,12 @@ public class Interview {
     public void testReverseLinkedList(){
         SingleLinkedList linkedList = new SingleLinkedList();
 
-//        SingleLinkedList reverseLinkedList = this.reverseLinkedList(linkedList);
+        linkedList.showLinkedList();
 
         SingleLinkedList reverse = this.reverse(linkedList);
 
-        linkedList.showLinkedList();
         System.out.println("反转后的链表为：");
-//        reverseLinkedList.showLinkedList();
-        System.out.println("-----------------");
+
         reverse.showLinkedList();
 
     }
@@ -67,10 +70,8 @@ public class Interview {
     @Test
     public void testReverseShowLinkedList(){
         SingleLinkedList linkedList = new SingleLinkedList();
-        linkedList.showLinkedList();
-        System.out.println();
-        SingleLinkedList reverse = reverse(linkedList);
-        reverse.showLinkedList();
+
+        ReverseShowLinkedList(linkedList);
     }
 
     public int validNodeCount(SingleLinkedList linkedList){
@@ -122,7 +123,7 @@ public class Interview {
     }
 
     /**
-     *  自己写的翻转，耦合性太强
+     *  自己写的翻转，耦合性太强（需要使用自定义的链表方法）
      * @return
      */
     public SingleLinkedList reverseLinkedList(SingleLinkedList linkedList){
@@ -160,7 +161,7 @@ public class Interview {
         CharacterNode temp = linkedList.head.next;
         CharacterNode next = null;
 
-        if (linkedList.head.next.next == null){
+        if (temp == null){
             return linkedList;
         }
 
@@ -191,13 +192,26 @@ public class Interview {
     }
 
 
-    public SingleLinkedList ReverseShowLinkedList(){
-        return null;
+    public void ReverseShowLinkedList(SingleLinkedList linkedList){
+
+        CharacterNode temp = linkedList.head.next;
+        // 判断链表是否为空
+        if (temp == null){
+            return ;
+        }
+
+        Stack<CharacterNode> characterNodes = new Stack<>();
+
+        while (temp != null){
+            characterNodes.push(temp);
+
+            // 节点后移
+            temp = temp.next;
+        }
+
+        while (characterNodes.size() > 0){
+            System.out.println(characterNodes.pop());
+        }
     }
-
-
-
-
-
 
 }
